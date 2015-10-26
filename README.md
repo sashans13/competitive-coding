@@ -17,5 +17,5 @@ In your `~/.bash_profile` or any other script that runs when terminal is launche
 `. ~/competitive_script.sh`
 This will run the script in the current process, so you'll have direct access to functions.
 
-# Warnings
+## Warnings
 If you already have global commands that would collide with function names of this script (such as programming language R which is run by `r`), you may rename functions `r, rd, ra, rad` into anything else, and they'll be usable out of the box. If you change other functions' names, you'll have the change it in all the lines they're invoked.
