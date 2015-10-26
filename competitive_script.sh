@@ -35,9 +35,9 @@ function compile()
     fi
 
     if [ "$is_debug" = true ]; then
-        g++ -g "$src_noext.cpp" -o "$src_noext" -DLOCAL -DDEBUG
+        g++ "$src_noext.cpp" -o "$src_noext" -DLOCAL -DDEBUG
     else
-        g++ -g "$src_noext.cpp" -o "$src_noext" -DLOCAL
+        g++ "$src_noext.cpp" -o "$src_noext" -DLOCAL
     fi
 
     if [ $? -ne 0 ]; then
@@ -147,7 +147,7 @@ function rad()
 # Copy 
 function gimme()
 {
-    template_path="~/competitive-coding/competitive_template.cpp"
+    template_path="${HOME}/competitive-coding/competitive_template.cpp"
 
     if [ $# -ne 1 ]; then
         printf "Provide a valid number of arguments\n"
@@ -161,6 +161,23 @@ function gimme()
         fi
 
         cp "$template_path" "$PWD/src.cpp"
+    elif [ $1 = "cf" ]; then
+        # codeforces
+        declare -a arr=("a" "b" "c" "d" "e")
+        for dir in "${arr[@]}"; do
+            mkdir "$dir"
+            if [ ! -f "$template_path" ]; then
+                printf "Could not find template, is the path correct? Check the script!\n"
+                return 1
+            fi
+
+            if [ ! -f "$PWD/$dir/src.cpp" ]; then
+                cp "$template_path" "$PWD/$dir/src.cpp"
+                if [ $? -eq 0 ]; then
+                    printf "Created $PWD/$dir/src.cpp\n"
+                fi
+            fi
+        done
     else
         printf "Misspelt that, didn't ya?\n"
     fi
@@ -173,7 +190,7 @@ function edit-vimrc()
 
 function edit-template()
 {
-    template_path="~/competitive-coding/competitive_template.cpp"
+    template_path="${HOME}/competitive-coding/competitive_template.cpp"
 
     if [ ! -f "$template_path" ]; then
         printf "Could not find template, is the path correct? Check the script!\n"
