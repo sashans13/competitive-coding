@@ -147,7 +147,7 @@ function rad()
 # Copy 
 function gimme()
 {
-    template_path="/usr/local/bin/competitive_template.cpp"
+    template_path="~/competitive-coding/competitive_template.cpp"
 
     if [ $# -ne 1 ]; then
         printf "Provide a valid number of arguments\n"
@@ -155,6 +155,11 @@ function gimme()
     fi
 
     if [ $1 = "source" ]; then
+        if [ ! -f "$template_path" ]; then
+            printf "Could not find template, is the path correct? Check the script!\n"
+            return 1
+        fi
+
         cp "$template_path" "$PWD/src.cpp"
     else
         printf "Misspelt that, didn't ya?\n"
@@ -168,7 +173,11 @@ function edit-vimrc()
 
 function edit-template()
 {
-    template_path="/usr/local/bin/competitive_template.cpp"
+    template_path="~/competitive-coding/competitive_template.cpp"
 
+    if [ ! -f "$template_path" ]; then
+        printf "Could not find template, is the path correct? Check the script!\n"
+        return 1
+    fi
     mvim "$template_path"
 }
